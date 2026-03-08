@@ -1,28 +1,28 @@
 class Solution {
 public:
     string convert(string s, int numRows) {
-        if (numRows == 1 || numRows >= s.length()) {
-            return s;
-        }
+        if (numRows == 1 || s.size() <= numRows) return s;
 
-        vector<string> rows(numRows);
-        int currRow = 0;
-        bool goingDown = false;
+        vector<string> matrix(numRows);
+        int i = 0, n = s.size(), index = 0;
+        bool direction = true;
 
-        for (char c : s) {
-            rows[currRow] += c;
+        while (i < n) {
+            matrix[index].push_back(s[i]);
 
-            // Change direction at top or bottom
-            if (currRow == 0 || currRow == numRows - 1) {
-                goingDown = !goingDown;
-            }
+            if (index == numRows - 1) direction = false;
+            if (index == 0) direction = true;
 
-            currRow += goingDown ? 1 : -1;
+            if (direction) index++;
+            else index--;
+
+            i++;
         }
 
         string result;
-        for (string &row : rows) {
-            result += row;
+        for(auto &x:matrix)
+        {
+            result+=x;
         }
 
         return result;
